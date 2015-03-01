@@ -1,0 +1,16 @@
+bower_components/**
+node_modules/**
+built-components/**
+components/**/*.css
+coverage/**
+.sass-cache
+.node-version
+**/bower_components/**
+**/node_modules/**
+**/built-components/**
+components/**/*.css
+web-components.iml
+.idea/
+bundles/**
+npm-debug.log
+**/styleguide/config
