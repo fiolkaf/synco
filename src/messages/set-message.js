@@ -19,7 +19,7 @@ SetMessage.prototype.process = function(object) {
         throw 'Object must have uri defined: ' + JSON.stringify(object);
     }
     var index = this.uri.indexOf(object.uri);
-    if ( index !== 0) {
+    if (index !== 0) {
         throw 'Message and object uri do not match';
     }
 

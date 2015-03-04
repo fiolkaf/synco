@@ -15,5 +15,13 @@ module.exports = {
     },
     delete: (uri) => {
         return new DeleteMessage(uri);
+    },
+    create: data => {
+        switch (data.type) {
+            case 'new': return new NewMessage(data.uri);
+            case 'set': return new SetMessage(data.uri, data.value);
+            case 'get': return new GetMessage(data.uri);
+            case 'delete': return new DeleteMessage(data.uri);
+        }
     }
 };

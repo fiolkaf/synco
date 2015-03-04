@@ -32,7 +32,7 @@ DeleteMessage.prototype.process = function(object) {
 
     if (Array.isArray(leaf)) {
         var items = leaf.filter( item => {
-            return item.id === key;
+            return item.hasOwnProperty('id') ? item.id === key : item === key;
         });
 
         if (items.length === 0) {

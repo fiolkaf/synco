@@ -10,6 +10,8 @@
   "license": "MIT",
   "dependencies": {
     "brixo-framework": "0.0.23",
+    "bussi": "^0.1.2",
+    "object.assign": "^1.1.1",
     "sass-loader": "^0.3.1"
   }
 }

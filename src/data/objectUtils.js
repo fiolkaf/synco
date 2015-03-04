@@ -6,7 +6,7 @@ function findDescendant(object, keys) {
 
     if (Array.isArray(object)) {
         var items = object.filter( item => {
-            return item.id === key;
+            return item.id == key;
         });
 
         if (items.length === 0) {

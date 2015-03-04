@@ -1,3 +1,14 @@
-var React = require('react');
-var App = require('./modules/application/application.jsx');
-React.render(React.createElement(App, null), document.body);
+var Observable = require('./src/mixin/observable');
+var Disposable = require('./src/mixin/disposable');
+var RemoteObject = require('./src/remote-object');
+var Observables = require('./src/observable/observables');
+
+module.exports = {
+    RemoteObject: RemoteObject,
+    ObservableObject: Observables.ObservableObject,
+    ObservableArray: Observables.ObservableArray,
+    Mixin: {
+        Observable: Observable,
+        Disposable: Disposable
+    }
+};
