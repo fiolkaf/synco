@@ -15,7 +15,7 @@ NewMessage.prototype.constructor = NewMessage;
 
 NewMessage.prototype.process = function(object) {
     object = object || {};
-    object.uri = this.uri;
+    object._uri = this.uri;
     return object;
 };
 

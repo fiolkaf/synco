@@ -16,11 +16,11 @@ describe('message', function() {
                 msg.process(object);
             });
             expect(object, 'to equal', {
-                uri : '/root',
+                _uri : '/root',
                 name: 'test_name',
                 array: [
                     {
-                        id: 'id0',
+                        _id: 'id0',
                         property: true
                     }
                 ]

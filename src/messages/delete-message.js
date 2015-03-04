@@ -15,14 +15,14 @@ DeleteMessage.prototype = new Message();
 DeleteMessage.prototype.consructor = DeleteMessage;
 
 DeleteMessage.prototype.process = function(object) {
-    if (!object.uri) {
-        throw 'Object must have uri defined: ' + JSON.stringify(object);
+    if (!object._uri) {
+        throw 'Object must have _uri defined: ' + JSON.stringify(object);
     }
-    var index = this.uri.indexOf(object.uri);
+    var index = this.uri.indexOf(object._uri);
     if ( index !== 0) {
         throw 'Message and object uri do not match';
     }
-    var keys = this.uri.substring(object.uri.length).split('/').filter(i => i);
+    var keys = this.uri.substring(object._uri.length).split('/').filter(i => i);
 
     var key = keys.pop();
     var leaf = objectUtils.findDescendant(object, keys);
@@ -32,7 +32,7 @@ DeleteMessage.prototype.process = function(object) {
 
     if (Array.isArray(leaf)) {
         var items = leaf.filter( item => {
-            return item.hasOwnProperty('id') ? item.id === key : item === key;
+            return item.hasOwnProperty('_id') ? item._id === key : item === key;
         });
 
         if (items.length === 0) {

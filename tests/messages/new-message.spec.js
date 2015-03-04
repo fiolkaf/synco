@@ -10,15 +10,15 @@ describe('new message', function() {
     it('can get message data', function() {
         var message = new NewMessage('/uri');
         expect(message.data(), 'to equal', {
-            type: 'new',
-            uri: '/uri'
+            uri: '/uri',
+            type: 'new'
         });
     });
     it('can process message', function() {
         var message = new NewMessage('/uri');
         var obj = message.process();
         expect(obj, 'to equal', {
-            uri: '/uri'
+            _uri: '/uri'
         });
     });
 });
