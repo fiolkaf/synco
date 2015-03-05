@@ -1,5 +1,5 @@
 var Message = require('./message');
-var objectUtils = require('../data/objectUtils');
+var objectUtils = require('../data/object-utils');
 
 function SetMessage(uri, value) {
     if (uri[0] !== '/') {
@@ -31,17 +31,22 @@ SetMessage.prototype.process = function(object) {
     }
 
     if (Array.isArray(leaf)) {
+
+        if (typeof this.value !== 'object') {
+            leaf.push(this.value);
+            return;
+        }
+
         var items = leaf.filter( item => {
             return item._id === key;
         });
-
         if (items.length) {
             leaf[leaf.indexOf(items[0])] = this.value;
             return;
         }
-
         this.value._id = key;
         leaf.push(this.value);
+
     } else {
         leaf[key] = this.value;
     }

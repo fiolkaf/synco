@@ -1,4 +1,5 @@
 var messages = require('./messages');
+var objectUtils = require('./data/object-utils');
 
 function SyncoObject(target) {
     target = target || {};
@@ -7,6 +8,7 @@ function SyncoObject(target) {
     target.set = this.set;
     target.process = this.process;
     target.data = this.data;
+    target.messages = this.messages;
 
     return target;
 }
@@ -31,6 +33,11 @@ SyncoObject.prototype.process = function(messages) {
     messages.forEach(message => message.process(this));
 
     return this;
+};
+
+SyncoObject.prototype.messages = function() {
+    return objectUtils.getUris(this.data())
+        .map(item => messages.set(item.uri, item.value));
 };
 
 SyncoObject.prototype.data = function() {

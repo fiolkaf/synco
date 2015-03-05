@@ -1,5 +1,5 @@
 var Message = require('./message');
-var objectUtils = require('../data/objectUtils');
+var objectUtils = require('../data/object-utils');
 
 function DeleteMessage(uri) {
     if (uri[0] !== '/') {
@@ -32,7 +32,7 @@ DeleteMessage.prototype.process = function(object) {
 
     if (Array.isArray(leaf)) {
         var items = leaf.filter( item => {
-            return item.hasOwnProperty('_id') ? item._id === key : item === key;
+            return item.hasOwnProperty('_id') ? item._id === key : item == key;
         });
 
         if (items.length === 0) {

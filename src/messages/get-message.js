@@ -1,5 +1,5 @@
 var Message = require('./message');
-var objectUtils = require('../data/objectUtils');
+var objectUtils = require('../data/object-utils');
 
 function GetMessage(uri, value) {
     if (uri[0] !== '/') {
