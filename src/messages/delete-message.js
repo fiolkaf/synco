@@ -26,7 +26,7 @@ DeleteMessage.prototype.process = function(object) {
 
     var key = keys.pop();
     var leaf = objectUtils.findDescendant(object, keys);
-    if (typeof(leaf) === 'undefined') {
+    if (leaf == null) {
         return object; // Object does not contain this part
     }
 

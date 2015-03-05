@@ -1,13 +1,12 @@
 var Message = require('./message');
 var objectUtils = require('../data/object-utils');
 
-function GetMessage(uri, value) {
-    if (uri[0] !== '/') {
-        throw 'Uri must start with '/'/'/' character';
+function GetMessage(uri) {
+    if (!uri || uri[0] !== '/') {
+        throw 'uri must start with '/'/'/' character';
     }
     this.uri = uri;
     this.type = 'get';
-    this.value = value;
 }
 
 GetMessage.prototype = new Message();
@@ -21,6 +20,10 @@ GetMessage.prototype.process = function(object) {
     var index = this.uri.indexOf(object._uri);
     if ( index !== 0) {
         throw 'Message and object uri do not match';
+    }
+
+    if (this.uri.length === object._uri.length) {
+        return object;
     }
 
     var keys = this.uri.substring(object._uri.length).split('/').filter(i => i);

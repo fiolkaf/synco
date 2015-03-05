@@ -35,4 +35,15 @@ describe('get message', function() {
             _id: 'id0'
         });
     });
+    it('can return itself', function() {
+        var message = new GetMessage('/root', true);
+        var obj = message.process({
+            _uri: '/root',
+            value: 'test'
+        });
+        expect(obj, 'to equal', {
+            _uri: '/root',
+            value: 'test'
+        });
+    });
 });

@@ -15,6 +15,10 @@ function findDescendant(object, keys) {
 
         return findDescendant(items[0], keys);
     } else {
+        if (!object.hasOwnProperty(key)) {
+            return null;
+        }
+
         return findDescendant(object[key], keys);
     }
 }

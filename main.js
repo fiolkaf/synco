@@ -1,14 +1,7 @@
-var Observable = require('./src/mixin/observable');
-var Disposable = require('./src/mixin/disposable');
-var RemoteObject = require('./src/remote-object');
-var Observables = require('./src/observable/observables');
+var Synco = require('./src/synco-object');
+var Messages = require('./src/messages');
 
 module.exports = {
-    RemoteObject: RemoteObject,
-    ObservableObject: Observables.ObservableObject,
-    ObservableArray: Observables.ObservableArray,
-    Mixin: {
-        Observable: Observable,
-        Disposable: Disposable
-    }
+    Synco: Synco,
+    Messages: Messages
 };
