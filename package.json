@@ -1,6 +1,6 @@
 {
   "name": "synco",
-  "version": "0.0.9",
+  "version": "0.0.10",
   "description": "",
   "main": "main.js",
   "scripts": {
@@ -10,5 +10,8 @@
   "license": "MIT",
   "devDependencies": {
     "brixo-framework": "0.0.23"
+  },
+  "dependencies": {
+    "object.assign": "^1.1.1"
   }
 }
