@@ -1,5 +1,6 @@
 var Message = require('./message');
 var objectUtils = require('../data/object-utils');
+var objectAssign = Object.assign || require('object.assign');
 
 function SetMessage(uri, value) {
     if (uri[0] !== '/') {
@@ -24,6 +25,11 @@ SetMessage.prototype.process = function(object) {
     }
 
     var keys = this.uri.substring(object._uri.length).split('/').filter(i => i);
+    if (!keys.length) {
+        objectAssign(object, this.value);
+        return object;
+    }
+
     var key = keys.pop();
     var leaf = objectUtils.findDescendant(object, keys, true);
 

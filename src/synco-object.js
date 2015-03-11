@@ -22,7 +22,9 @@ SyncoObject.prototype.process = function(messages) {
         messages = [messages];
     }
 
-    messages.forEach(message => message.process(this._data));
+    messages.forEach(function(message) {
+        message.process(this._data);
+    }.bind(this));
 
     return this;
 };
