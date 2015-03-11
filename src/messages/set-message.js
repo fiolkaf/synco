@@ -25,10 +25,7 @@ SetMessage.prototype.process = function(object) {
 
     var keys = this.uri.substring(object._uri.length).split('/').filter(i => i);
     var key = keys.pop();
-    var leaf = objectUtils.findDescendant(object, keys);
-    if (leaf === null) {
-        return; // Object does not contain this part
-    }
+    var leaf = objectUtils.findDescendant(object, keys, true);
 
     if (Array.isArray(leaf)) {
 

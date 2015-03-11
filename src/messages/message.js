@@ -1,6 +1,6 @@
 function Message() {}
 
-Message.prototype.data = function() {
+Message.prototype.getData = function() {
     return JSON.parse(JSON.stringify(this));
 }
 

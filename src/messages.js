@@ -4,8 +4,8 @@ var GetMessage = require('./messages/get-message');
 var DeleteMessage = require('./messages/delete-message');
 
 module.exports = {
-    new: (uri) => {
-        return new NewMessage(uri);
+    new: (uri, data) => {
+        return new NewMessage(uri, data);
     },
     set: (uri, value) => {
         return new SetMessage(uri, value);

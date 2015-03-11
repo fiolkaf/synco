@@ -9,7 +9,7 @@ describe('delete message', function() {
     });
     it('can get message data', function() {
         var message = new DeleteMessage('/uri');
-        expect(message.data(), 'to equal', {
+        expect(message.getData(), 'to equal', {
             uri: '/uri',
             type: 'delete',
         });

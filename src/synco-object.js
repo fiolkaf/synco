@@ -1,28 +1,20 @@
 var messages = require('./messages');
 var objectUtils = require('./data/object-utils');
 
-function SyncoObject(target) {
-    target = target || {};
-    target.new = this.new;
-    target.delete = this.delete;
-    target.set = this.set;
-    target.process = this.process;
-    target.data = this.data;
-    target.messages = this.messages;
-
-    return target;
+function SyncoObject(data) {
+    this._data = data || {};
 }
 
-SyncoObject.prototype.new = function(uri) {
-    return this.process(messages.new(uri));
+SyncoObject.prototype.new = function(uri, data) {
+    return this.process(messages.new(uri, data));
 };
 
 SyncoObject.prototype.delete = function(uri) {
     return this.process(messages.delete(uri));
 };
 
-SyncoObject.prototype.set = function(uri, value) {
-    return this.process(messages.set(uri, value));
+SyncoObject.prototype.set = function(uri, data) {
+    return this.process(messages.set(uri, data));
 };
 
 SyncoObject.prototype.process = function(messages) {
@@ -30,7 +22,7 @@ SyncoObject.prototype.process = function(messages) {
         messages = [messages];
     }
 
-    messages.forEach(message => message.process(this));
+    messages.forEach(message => message.process(this._data));
 
     return this;
 };
@@ -41,7 +33,7 @@ SyncoObject.prototype.messages = function() {
 };
 
 SyncoObject.prototype.data = function() {
-    return JSON.parse(JSON.stringify(this));
+    return this._data;
 };
 
 module.exports = data => {

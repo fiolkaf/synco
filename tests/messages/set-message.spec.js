@@ -9,7 +9,7 @@ describe('set message', function() {
     });
     it('can get message data', function() {
         var message = new SetMessage('/uri');
-        expect(message.data(), 'to equal', {
+        expect(message.getData(), 'to equal', {
             uri: '/uri',
             type: 'set'
         });

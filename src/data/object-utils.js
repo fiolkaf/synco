@@ -1,4 +1,4 @@
-function findDescendant(object, keys) {
+function findDescendant(object, keys, createNonExisting) {
     var key = keys.shift();
     if (typeof key === 'undefined') {
         return object;
@@ -15,11 +15,16 @@ function findDescendant(object, keys) {
 
         return findDescendant(items[0], keys);
     } else {
-        if (!object.hasOwnProperty(key)) {
+        var hasProperty = object.hasOwnProperty(key);
+        if (!hasProperty && !createNonExisting) {
             return null;
         }
 
-        return findDescendant(object[key], keys);
+        if (!hasProperty && createNonExisting) {
+            object[key] = {};
+        }
+
+        return findDescendant(object[key], keys, true);
     }
 }
 

@@ -7,11 +7,18 @@ describe('new message', function() {
         expect(message, 'to be defined');
         expect(message.type, 'to equal', 'new');
     });
+    it('can create message with data', function() {
+        var message = new NewMessage('/uri', { hello: 'world' });
+        expect(message, 'to be defined');
+        expect(message.type, 'to equal', 'new');
+        expect(message.data, 'to equal', { hello: 'world'} );
+    });
     it('can get message data', function() {
         var message = new NewMessage('/uri');
-        expect(message.data(), 'to equal', {
+        expect(message.getData(), 'to equal', {
             uri: '/uri',
-            type: 'new'
+            type: 'new',
+            data: undefined
         });
     });
     it('can process message', function() {
