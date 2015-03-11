@@ -1,6 +1,7 @@
 var NewMessage = require('./messages/new-message');
 var SetMessage = require('./messages/set-message');
 var GetMessage = require('./messages/get-message');
+var UpdateMessage = require('./messages/update-message');
 var DeleteMessage = require('./messages/delete-message');
 
 module.exports = {
@@ -10,18 +11,22 @@ module.exports = {
     set: (uri, value) => {
         return new SetMessage(uri, value);
     },
-    get: (uri) => {
+    update: (uri, value) => {
+        return new UpdateMessage(uri, value);
+    },
+    get: uri => {
         return new GetMessage(uri);
     },
-    delete: (uri) => {
+    delete: uri => {
         return new DeleteMessage(uri);
     },
     create: data => {
         switch (data.type) {
-            case 'new': return new NewMessage(data.uri);
-            case 'set': return new SetMessage(data.uri, data.value);
             case 'get': return new GetMessage(data.uri);
+            case 'new': return new NewMessage(data.uri, data.data);
             case 'delete': return new DeleteMessage(data.uri);
+            case 'set': return new SetMessage(data.uri, data.data);
+            case 'update': return new UpdateMessage(data.uri, data.data);
         }
     }
 };

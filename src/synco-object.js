@@ -9,12 +9,20 @@ SyncoObject.prototype.new = function(uri, data) {
     return this.process(messages.new(uri, data));
 };
 
+SyncoObject.prototype.set = function(uri, data) {
+    return this.process(messages.set(uri, data));
+};
+
+SyncoObject.prototype.update = function(uri, data) {
+    return this.process(messages.update(uri, data));
+};
+
 SyncoObject.prototype.delete = function(uri) {
     return this.process(messages.delete(uri));
 };
 
-SyncoObject.prototype.set = function(uri, data) {
-    return this.process(messages.set(uri, data));
+SyncoObject.prototype.get = function(uri, data) {
+    return messages.get(uri).process(this._data);
 };
 
 SyncoObject.prototype.process = function(messages) {

@@ -40,10 +40,12 @@ describe('syncoObject', function() {
     });
     describe('set', function() {
         it('can set root element properties', function() {
-            var object = {_uri: '/'};
+            var object = {_uri: '/', car: 'beetle'};
             synco(object).set('/', { fruit: 'orange' });
-            expect(object._uri, 'to equal', '/');
-            expect(object.fruit, 'to equal', 'orange');
+            expect(object, 'to equal', {
+                _uri : '/',
+                fruit: 'orange'
+            });
         });
         it('can set root property', function() {
             var object = {_uri: '/root'};
@@ -74,6 +76,51 @@ describe('syncoObject', function() {
             synco(obj)
                 .set('/root/object/object/name', 'orange')
                 .set('/root/object/object/name', 'apple');
+
+            expect(obj.object.object.name, 'to equal', 'apple');
+        });
+    });
+    describe('update', function() {
+        it('can update root element properties', function() {
+            var object = {_uri: '/'};
+            synco(object).update('/', { fruit: 'orange' });
+            synco(object).update('/', { car: 'beetle' });
+
+            expect(object, 'to equal', {
+                _uri: '/',
+                fruit: 'orange',
+                car: 'beetle'
+            });
+        });
+        it('can update root property', function() {
+            var object = {_uri: '/root'};
+            synco(object)
+                .update('/root/name', 'orange')
+                .update('/root/name', 'apple');
+
+            expect(object.name, 'to equal', 'apple');
+        });
+        it('can set nested property', function() {
+            var obj = { _uri: '/root', object: {} };
+            synco(obj)
+                .update('/root/object/name', 'orange')
+                .update('/root/object/name', 'apple');
+
+            expect(obj.object.name, 'to equal', 'apple');
+        });
+        it('can set property in non existing path', function() {
+            var obj = { _uri: '/root'};
+            synco(obj)
+                .update('/root/object/name', 'orange')
+                .update('/root/object/name', 'apple');
+
+            expect(obj.object.name, 'to equal', 'apple');
+        });
+        it('can set property in non existing nested path', function() {
+            var obj = { _uri: '/root'};
+            synco(obj)
+                .update('/root/object/object/name', 'orange')
+                .update('/root/object/object/name', 'apple');
 
             expect(obj.object.object.name, 'to equal', 'apple');
         });
@@ -162,12 +209,12 @@ describe('syncoObject', function() {
             expect(
                 object.messages().map(message => message.getData()),
                 'to equal', [
-                    { uri: '/root/_uri', type: 'set', value: '/root'},
-                    { uri: '/root/name', type: 'set', value: 'test_name'},
-                    { uri: '/root/array', type: 'set', value: []},
-                    { uri: '/root/array/id0', type: 'set', value: {}},
-                    { uri: '/root/array/id0/_id', type: 'set', value: 'id0'},
-                    { uri: '/root/array/id0/property', type: 'set', value: true}
+                    { uri: '/root/_uri', type: 'set', data: '/root'},
+                    { uri: '/root/name', type: 'set', data: 'test_name'},
+                    { uri: '/root/array', type: 'set', data: []},
+                    { uri: '/root/array/id0', type: 'set', data: {}},
+                    { uri: '/root/array/id0/_id', type: 'set', data: 'id0'},
+                    { uri: '/root/array/id0/property', type: 'set', data: true}
                 ]);
         });
         it('can clone synco objects', function() {

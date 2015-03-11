@@ -2,16 +2,30 @@ var Message = require('./message');
 var objectUtils = require('../data/object-utils');
 var objectAssign = Object.assign || require('object.assign');
 
-function SetMessage(uri, value) {
+function SetMessage(uri, data) {
     if (uri[0] !== '/') {
         throw 'Uri must start with '/'/'/' character';
     }
     this.uri = uri;
     this.type = 'set';
-    this.value = value;
+    this.data = data;
 }
 
 SetMessage.prototype = new Message();
+
+SetMessage.prototype._updateRoot = function(object, data) {
+    Object.keys(object)
+        .filter(key => key !== '_uri')
+        .forEach(key => {
+            delete object[key];
+        });
+
+    objectAssign(object, this.data);
+};
+
+SetMessage.prototype._updateValue = function(object, key, data) {
+    object[key] = data;
+};
 
 SetMessage.prototype.constructor = SetMessage;
 
@@ -26,7 +40,7 @@ SetMessage.prototype.process = function(object) {
 
     var keys = this.uri.substring(object._uri.length).split('/').filter(i => i);
     if (!keys.length) {
-        objectAssign(object, this.value);
+        this._updateRoot(object, this.data);
         return object;
     }
 
@@ -35,8 +49,8 @@ SetMessage.prototype.process = function(object) {
 
     if (Array.isArray(leaf)) {
 
-        if (typeof this.value !== 'object') {
-            leaf.push(this.value);
+        if (typeof this.data !== 'object') {
+            leaf.push(this.data);
             return;
         }
 
@@ -44,14 +58,14 @@ SetMessage.prototype.process = function(object) {
             return item._id === key;
         });
         if (items.length) {
-            leaf[leaf.indexOf(items[0])] = this.value;
-            return;
+            this._updateValue(leaf, leaf.indexOf(items[0]), this.data);
+            return object;
         }
-        this.value._id = key;
-        leaf.push(this.value);
+        this.data._id = key;
+        leaf.push(this.data);
 
     } else {
-        leaf[key] = this.value;
+        this._updateValue(leaf, key, this.data);
     }
 
     return object;

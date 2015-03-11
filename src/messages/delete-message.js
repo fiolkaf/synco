@@ -12,7 +12,7 @@ function DeleteMessage(uri) {
 
 DeleteMessage.prototype = new Message();
 
-DeleteMessage.prototype.consructor = DeleteMessage;
+DeleteMessage.prototype.constructor = DeleteMessage;
 
 DeleteMessage.prototype.process = function(object) {
     if (!object._uri) {
