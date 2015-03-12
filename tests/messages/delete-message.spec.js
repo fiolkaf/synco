@@ -24,6 +24,11 @@ describe('delete message', function() {
         var obj = message.process({ _uri: '/', value: 'test', array: [{ _id: 'id0' }] });
         expect(obj, 'to equal', { _uri: '/', value: 'test', array: [] });
     });
+    it('can process delete message on array - int ids', function() {
+        var message = new DeleteMessage('/array/1', true);
+        var obj = message.process({ _uri: '/', value: 'test', array: [{ _id: 1 }] });
+        expect(obj, 'to equal', { _uri: '/', value: 'test', array: [] });
+    });
     it('can process delete message on nested property', function() {
         var message = new DeleteMessage('/object/property', true);
         var obj = message.process({ _uri: '/', object: { property: 'test' } });
