@@ -18,6 +18,9 @@ UpdateMessage.prototype._updateRoot = function(object, data) {
 };
 
 UpdateMessage.prototype._updateValue = function(object, key, data) {
+    if (typeof object[key] === 'undefined') {
+        object[key] = {};
+    }
     if (typeof(data) === 'object' && !Array.isArray(data)) {
         objectAssign(object[key], data);
         return;
