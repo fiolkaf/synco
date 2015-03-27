@@ -53,6 +53,48 @@ describe('update message', function() {
 
         message = new UpdateMessage('/array', []);
         message.process(obj);
-        expect(obj, 'to equal', { _uri: '/', value: 'test', array: [] });
+        expect(obj, 'to equal', { _uri: '/', value: 'test', array: [1, 1] });
+    });
+    describe('arrays', function() {
+        describe('add', function() {
+            it('can add array items - primitive', function() {
+                var obj = { _uri: '/', value: 'test', array: [] };
+                var message = new UpdateMessage('/array', [1]);
+                message.process(obj);
+                expect(obj, 'to equal', { _uri: '/', value: 'test', array: [1] });
+            });
+            it('can add array items - objects with _id', function() {
+                var obj = { _uri: '/', value: 'test', array: [] };
+                var message = new UpdateMessage('/array', [ {_id: 1, name: '1' }]);
+                message.process(obj);
+                expect(obj, 'to equal', { _uri: '/', value: 'test', array: [{_id: 1, name: '1' }] });
+            });
+            it('can add array items - objects with _uri', function() {
+                var obj = { _uri: '/', value: 'test', array: [] };
+                var message = new UpdateMessage('/array', [ {_uri: 1, name: '1' }]);
+                message.process(obj);
+                expect(obj, 'to equal', { _uri: '/', value: 'test', array: [{_uri: 1, name: '1' }] });
+            });
+        });
+        describe('update', function() {
+            it('can update array items - primitive', function() {
+                var obj = { _uri: '/', value: 'test', array: [1] };
+                var message = new UpdateMessage('/array', [1]);
+                message.process(obj);
+                expect(obj, 'to equal', { _uri: '/', value: 'test', array: [1] });
+            });
+            it('can add array items - objects with _id', function() {
+                var obj = { _uri: '/', value: 'test', array: [{_id: 1, name: '1' }] };
+                var message = new UpdateMessage('/array', [ {_id: 1, name: '2' }]);
+                message.process(obj);
+                expect(obj, 'to equal', { _uri: '/', value: 'test', array: [{_id: 1, name: '2' }] });
+            });
+            it('can add array items - objects with _uri', function() {
+                var obj = { _uri: '/', value: 'test', array: [{_uri: 1, name: '1' }] };
+                var message = new UpdateMessage('/array', [ {_uri: 1, name: '2' }]);
+                message.process(obj);
+                expect(obj, 'to equal', { _uri: '/', value: 'test', array: [{_uri: 1, name: '2' }] });
+            });
+        });
     });
 });
