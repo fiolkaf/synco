@@ -43,6 +43,9 @@ UpdateMessage.prototype._updateValue = function(object, key, data) {
         var items = array.filter(item => getId(item) === getId(data[0]));
 
         if (!items.length) {
+            if (!data[0].hasOwnProperty('_id')) {
+                data[0]._id = data[0]._uri.split('/').pop();
+            }
             array.push(data[0]);
         } else if ( typeof data[0] === 'object') {
             objectAssign(items[0], data[0]);
