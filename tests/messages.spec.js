@@ -4,23 +4,22 @@ var expect = require('unexpected/unexpected');
 describe('message', function() {
     describe('build object', function() {
         var _messages = [
-            messages.new('/root'),
             messages.set('/root/name', 'test_name'),
             messages.set('/root/array', []),
-            messages.set('/root/array/id0', {}),
-            messages.set('/root/array/id0/property', true)
+            messages.set('/root/array/1', {}),
+            messages.set('/root/array/1/property', true)
         ];
         it('creates an object from messages', function() {
-            var object = {};
+            var object = { id: '/root' };
             _messages.forEach(msg => {
                 msg.process(object);
             });
             expect(object, 'to equal', {
-                _uri : '/root',
+                id : '/root',
                 name: 'test_name',
                 array: [
                     {
-                        _id: 'id0',
+                        id: '/root/array/1',
                         property: true
                     }
                 ]

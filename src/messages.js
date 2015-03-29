@@ -1,32 +1,27 @@
-var NewMessage = require('./messages/new-message');
 var SetMessage = require('./messages/set-message');
 var GetMessage = require('./messages/get-message');
 var UpdateMessage = require('./messages/update-message');
 var DeleteMessage = require('./messages/delete-message');
 
 module.exports = {
-    new: (uri, data) => {
-        return new NewMessage(uri, data);
+    set: (id, value) => {
+        return new SetMessage(id, value);
     },
-    set: (uri, value) => {
-        return new SetMessage(uri, value);
+    update: (id, value) => {
+        return new UpdateMessage(id, value);
     },
-    update: (uri, value) => {
-        return new UpdateMessage(uri, value);
+    get: id => {
+        return new GetMessage(id);
     },
-    get: uri => {
-        return new GetMessage(uri);
-    },
-    delete: uri => {
-        return new DeleteMessage(uri);
+    delete: id => {
+        return new DeleteMessage(id);
     },
     create: data => {
         switch (data.type) {
-            case 'get': return new GetMessage(data.uri);
-            case 'new': return new NewMessage(data.uri, data.data);
-            case 'delete': return new DeleteMessage(data.uri);
-            case 'set': return new SetMessage(data.uri, data.data);
-            case 'update': return new UpdateMessage(data.uri, data.data);
+            case 'get': return new GetMessage(data.id);
+            case 'delete': return new DeleteMessage(data.id);
+            case 'set': return new SetMessage(data.id, data.data);
+            case 'update': return new UpdateMessage(data.id, data.data);
         }
     }
 };

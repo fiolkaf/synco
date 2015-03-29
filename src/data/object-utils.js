@@ -6,7 +6,7 @@ function findDescendant(object, keys, createNonExisting) {
 
     if (Array.isArray(object)) {
         var items = object.filter( item => {
-            return item._id == key;
+            return item.id.split('/').pop() == key;
         });
 
         if (items.length === 0) {
@@ -28,45 +28,40 @@ function findDescendant(object, keys, createNonExisting) {
     }
 }
 
-function getUris(object, uri) {
-    if (typeof uri === 'undefined') {
-        uri = object._uri;
+function getIds(object, id) {
+    if (typeof id === 'undefined') {
+        id = object.id;
     }
 
-    if (!uri) {
-        throw 'Uri is not defined';
+    if (!id) {
+        throw 'Uri is not defined: ' + object ;
     }
 
     var result = [];
     Object.keys(object).forEach(function(key) {
         var property = object[key];
         if (typeof property !== 'object') {
-            result.push({ uri: uri + '/' + key, value: property });
+            result.push({ id: id + '/' + key, value: property });
             return;
         }
 
         if (Array.isArray(property)) {
-            result.push({ uri: uri + '/' + key, value: [] });
+            result.push({ id: id + '/' + key, value: [] });
             property.forEach((item, i) => {
-                if (typeof item !== 'object') {
-                    result.push({ uri: uri + '/' + key + '/['+ i +']', value: item });
-                    return;
-                }
-
                 if (Array.isArray(item)) {
                     throw 'Nested arrays not supported';
                 }
 
-                if (!item.hasOwnProperty('_id')) {
-                    throw 'Unidentified array item found, all array items must have _id defined';
+                if (!item.hasOwnProperty('id')) {
+                    throw 'Unidentified array item found, all array items must have id defined';
                 }
 
-                result.push({ uri: uri + '/' + key + '/' + item._id, value: {}});
-                Array.prototype.push.apply(result, getUris(item, uri + '/' + key + '/' + item._id))
+                result.push({ id: item.id, value: {}});
+                Array.prototype.push.apply(result, getIds(item, item.id))
             })
         } else {
-            result.push({ uri: uri + '/' + key, value: {} });
-            Array.prototype.push.apply(result, getUris(property, uri + '/' + key));
+            result.push({ id: id + '/' + key, value: {} });
+            Array.prototype.push.apply(result, getIds(property, id + '/' + key));
         }
     });
     return result;
@@ -74,5 +69,5 @@ function getUris(object, uri) {
 
 module.exports = {
     findDescendant: findDescendant,
-    getUris: getUris
+    getIds: getIds
 };

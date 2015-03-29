@@ -1,11 +1,11 @@
 var Message = require('./message');
 var objectUtils = require('../data/object-utils');
 
-function GetMessage(uri) {
-    if (!uri || uri[0] !== '/') {
+function GetMessage(id) {
+    if (!id || id[0] !== '/') {
         throw 'uri must start with '/'/'/' character';
     }
-    this.uri = uri;
+    this.id = id;
     this.type = 'get';
 }
 
@@ -14,19 +14,19 @@ GetMessage.prototype = new Message();
 GetMessage.prototype.constructor = GetMessage;
 
 GetMessage.prototype.process = function(object) {
-    if (!object._uri) {
-        throw 'Object must have _uri defined: ' + JSON.stringify(object);
+    if (!object.id) {
+        throw 'Object must have id defined: ' + JSON.stringify(object);
     }
-    var index = this.uri.indexOf(object._uri);
+    var index = this.id.indexOf(object.id);
     if ( index !== 0) {
-        throw 'Message and object uri do not match';
+        throw 'Message and object id do not match';
     }
 
-    if (this.uri.length === object._uri.length) {
+    if (this.id.length === object.id.length) {
         return object;
     }
 
-    var keys = this.uri.substring(object._uri.length).split('/').filter(i => i);
+    var keys = this.id.substring(object.id.length).split('/').filter(i => i);
     var key = keys.pop();
     var leaf = objectUtils.findDescendant(object, keys);
     if (leaf === null) {
@@ -35,7 +35,7 @@ GetMessage.prototype.process = function(object) {
 
     if (Array.isArray(leaf)) {
         var arr = leaf.filter( item => {
-            return item._id === key;
+            return item.id.split('/').pop() === key;
         });
         return arr.length ? arr[0] : null;
     } else {

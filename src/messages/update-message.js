@@ -2,11 +2,11 @@ var SetMessage = require('./set-message');
 var objectUtils = require('../data/object-utils');
 var objectAssign = Object.assign || require('object.assign');
 
-function UpdateMessage(uri, data) {
-    if (uri[0] !== '/') {
+function UpdateMessage(id, data) {
+    if (id[0] !== '/') {
         throw 'Uri must start with '/'/'/' character';
     }
-    this.uri = uri;
+    this.id = id;
     this.type = 'update';
     this.data = data;
 }
@@ -35,19 +35,11 @@ UpdateMessage.prototype._updateValue = function(object, key, data) {
         }
         var array = object[key];
 
-        var getId = item =>
-            item.hasOwnProperty && item.hasOwnProperty('_uri') ? item._uri :
-            item.hasOwnProperty && item.hasOwnProperty('_id') ? item._id :
-            item;
-
-        var items = array.filter(item => getId(item) === getId(data[0]));
+        var items = array.filter(item => item.id === data[0].id);
 
         if (!items.length) {
-            if (!data[0].hasOwnProperty('_id')) {
-                data[0]._id = data[0]._uri.split('/').pop();
-            }
             array.push(data[0]);
-        } else if ( typeof data[0] === 'object') {
+        } else if (typeof data[0] === 'object') {
             objectAssign(items[0], data[0]);
         }
         return;

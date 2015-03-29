@@ -5,24 +5,20 @@ function SyncoObject(data) {
     this._data = data || {};
 }
 
-SyncoObject.prototype.new = function(uri, data) {
-    return this.process(messages.new(uri, data));
+SyncoObject.prototype.set = function(id, data) {
+    return this.process(messages.set(id, data));
 };
 
-SyncoObject.prototype.set = function(uri, data) {
-    return this.process(messages.set(uri, data));
+SyncoObject.prototype.update = function(id, data) {
+    return this.process(messages.update(id, data));
 };
 
-SyncoObject.prototype.update = function(uri, data) {
-    return this.process(messages.update(uri, data));
+SyncoObject.prototype.delete = function(id) {
+    return this.process(messages.delete(id));
 };
 
-SyncoObject.prototype.delete = function(uri) {
-    return this.process(messages.delete(uri));
-};
-
-SyncoObject.prototype.get = function(uri, data) {
-    return messages.get(uri).process(this._data);
+SyncoObject.prototype.get = function(id, data) {
+    return messages.get(id).process(this._data);
 };
 
 SyncoObject.prototype.process = function(messages) {
@@ -38,8 +34,8 @@ SyncoObject.prototype.process = function(messages) {
 };
 
 SyncoObject.prototype.messages = function() {
-    return objectUtils.getUris(this.data())
-        .map(item => messages.set(item.uri, item.value));
+    return objectUtils.getIds(this.data())
+        .map(item => messages.set(item.id, item.value));
 };
 
 SyncoObject.prototype.data = function() {
