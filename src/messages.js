@@ -5,6 +5,9 @@ var UpdateMessage = require('./messages/update-message');
 var DeleteMessage = require('./messages/delete-message');
 
 module.exports = {
+    new: (id, value) => {
+        return new NewMessage(id, value);
+    },
     set: (id, value) => {
         return new SetMessage(id, value);
     },
