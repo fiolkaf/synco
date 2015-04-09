@@ -1,3 +1,4 @@
+var NewMessage = require('./messages/new-message');
 var SetMessage = require('./messages/set-message');
 var GetMessage = require('./messages/get-message');
 var UpdateMessage = require('./messages/update-message');
@@ -18,6 +19,7 @@ module.exports = {
     },
     create: data => {
         switch (data.type) {
+            case 'new': return new NewMessage(data.id, data.data);
             case 'get': return new GetMessage(data.id);
             case 'delete': return new DeleteMessage(data.id);
             case 'set': return new SetMessage(data.id, data.data);
