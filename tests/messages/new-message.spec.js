@@ -15,4 +15,16 @@ describe('new message', function() {
             type: 'new'
         });
     });
+    it('can process new message on array', function() {
+        var message = new NewMessage('/object/array', { id: '/object/array/1', text: 'tst' });
+        var obj = message.process({ id: '/object',  array: [] });
+
+        expect(obj, 'to equal', { id: '/object',  array: [{ id: '/object/array/1', text: 'tst' }] });
+    });
+    it('can process new message on nested array', function() {
+        var message = new NewMessage('/object/object/array', { id: '/object/object/array/1', text: 'tst' });
+        var obj = message.process({ id: '/object' });
+
+        expect(obj, 'to equal', { id: '/object',  object: { array: [{ id: '/object/object/array/1', text: 'tst' }] }});
+    });
 });

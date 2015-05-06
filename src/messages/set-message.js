@@ -45,7 +45,7 @@ SetMessage.prototype.process = function(object) {
     }
 
     var key = keys.pop();
-    var leaf = objectUtils.findDescendant(object, keys, true);
+    var leaf = objectUtils.findDescendant(object, keys, {});
 
     if (Array.isArray(leaf)) {
 

@@ -21,10 +21,10 @@ function findDescendant(object, keys, createNonExisting) {
         }
 
         if (!hasProperty && createNonExisting) {
-            object[key] = {};
+            object[key] = keys.length ? {} : createNonExisting;
         }
 
-        return findDescendant(object[key], keys, true);
+        return findDescendant(object[key], keys, createNonExisting);
     }
 }
 
