@@ -61,7 +61,9 @@ SetMessage.prototype.process = function(object) {
             this._updateValue(leaf, leaf.indexOf(items[0]), this.data);
             return object;
         }
-        this.data.id = this.id;
+        if (!this.data.id) {
+            this.data.id = this.id;
+        }
         leaf.push(this.data);
 
     } else {

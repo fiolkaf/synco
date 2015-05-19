@@ -5,6 +5,10 @@ function SyncoObject(data) {
     this._data = data || {};
 }
 
+SyncoObject.prototype.new = function(id, data) {
+    return this.process(messages.new(id, data));
+};
+
 SyncoObject.prototype.set = function(id, data) {
     return this.process(messages.set(id, data));
 };
