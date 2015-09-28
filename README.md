@@ -1,4 +1,4 @@
-# synco - Functional Plain Javascript Object with property modification and access by uri.
+### synco - JS object with property modification and access by uri.
 
 ## Usage:
 ```
