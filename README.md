@@ -1,12 +1,10 @@
-# synco
-
-Functional Plain Javascript Object implementing property modifications and access by uri.
+# synco - Functional Plain Javascript Object with property modification and access by uri.
 
 ## Usage:
 ```
 npm install synco
 ```
-```
+```javascript
 var synco = require('synco').Synco;
 var synco = synco({id : '/root'}); // create new synco object
 synco.set('/root/name', 'test_name');
@@ -30,7 +28,7 @@ synco.delete('/root/name'); // delete property
 ### Messages:
 
 Synco object can be decomposed to message list:
-```
+```javascript
 var synco = synco({
   id : '/root',
   property: 'value',
@@ -40,7 +38,7 @@ var messages = synco.messages(); // [ messages.new('/root'), messages.set('/prop
 ```
 
 and can be constructed from messages:
-```
+```javascript
 var synco = synco({id : '/root'}); // create new synco object
 synco.process([
   messages.set('/root/property', 'name')        // { id: '/root', property: 'name' }
