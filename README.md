@@ -1,4 +1,4 @@
-### synco - JS object with property modification and access by uri.
+# synco - modify object properties with uri paths
 
 ## Usage:
 ```
