@@ -1,6 +1,6 @@
 [![Build Status](https://travis-ci.org/fiolkaf/synco.svg?branch=master)](https://travis-ci.org/fiolkaf/synco)
 
-# synco - Uri access to object properties
+# synco - modify object properties with uri paths
 
 ## Usage:
 ```
