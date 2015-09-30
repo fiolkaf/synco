@@ -1,5 +1,5 @@
+var expect = require('unexpected');
 var synco = require('../src/synco-object');
-var expect = require('unexpected/unexpected');
 
 describe('syncoObject', function() {
     describe('create', function() {

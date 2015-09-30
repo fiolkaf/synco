@@ -1,5 +1,5 @@
+var expect = require('unexpected');
 var SetMessage = require('../../src/messages/set-message');
-var expect = require('unexpected/unexpected');
 
 describe('set message', function() {
     it('can create message', function() {

@@ -1,42 +1,36 @@
 module.exports = function(grunt) {
-    var _ = require('lodash');
-    grunt.loadNpmTasks('grunt-open');
-    grunt.loadNpmTasks('grunt-contrib-jshint');
-    grunt.loadNpmTasks('grunt-karma');
-    grunt.loadNpmTasks('grunt-webpack');
-    grunt.loadNpmTasks('grunt-scaffold');
-    grunt.loadTasks("./node_modules/brixo-framework/grunt-tasks");
-
-    var webpackGrunt = require('brixo-framework/config/grunt.webpack.config.js')(grunt);
-    webpackGrunt.configItems('elements');
-    webpackGrunt.configItems('components');
 
     grunt.initConfig({
-        
-        open: _.merge(webpackGrunt.open, {
-            start: {
-                path : 'http://localhost:8090/'
-            }
-        }),
-        
         jshint: {
-            all: {
-                src: ['gruntfile.js', 'components/**/*.js*', 'elements/**/*.js*', 'styleguide/**/*.js*'],
-                jshintrc: true
+            files: ['Gruntfile.js', 'src/**/*.js', 'tests/**/*.js'],
+            options: {
+                esnext: true
             }
         },
-        
-        karma: _.merge(webpackGrunt.karma, {
-        }),
-
-        webpack: _.merge(webpackGrunt.webpack, {
-        }),
-
-        "webpack-dev-server": _.merge(webpackGrunt["webpack-dev-server"], {            
-        }),
-
-        scaffold: require('brixo-framework/scaffolding/scaffold.config.js')(grunt, webpackGrunt.configItem)
+        karma: {
+            unit: {
+                configFile: 'karma.conf.js'
+            }
+        },
+        coverage: {
+            default: {
+                options: {
+                    thresholds: {
+                        'statements': 10,
+                        'branches': 10,
+                        'lines': 10,
+                        'functions': 10
+                    },
+                    dir: 'coverage',
+                    root: '.'
+                }
+            }
+        }
     });
 
-    grunt.registerTask('default', ['open:start', 'webpack-dev-server:start']);
+    grunt.loadNpmTasks('grunt-karma');
+    grunt.loadNpmTasks('grunt-contrib-jshint');
+    grunt.loadNpmTasks('grunt-istanbul-coverage');
+
+    grunt.registerTask('default', ['jshint', 'karma', 'coverage']);
 };

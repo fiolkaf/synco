@@ -5,7 +5,7 @@ function findDescendant(object, keys, createNonExisting) {
     }
 
     if (Array.isArray(object)) {
-        var items = object.filter( item => {
+        var items = object.filter(item => {
             return item.id.split('/').pop() == key;
         });
 
@@ -57,8 +57,8 @@ function getIds(object, id) {
                 }
 
                 result.push({ id: item.id, value: {}});
-                Array.prototype.push.apply(result, getIds(item, item.id))
-            })
+                Array.prototype.push.apply(result, getIds(item, item.id));
+            });
         } else {
             result.push({ id: id + '/' + key, value: {} });
             Array.prototype.push.apply(result, getIds(property, id + '/' + key));

@@ -1,5 +1,5 @@
+var expect = require('unexpected');
 var DeleteMessage = require('../../src/messages/delete-message');
-var expect = require('unexpected/unexpected');
 
 describe('delete message', function() {
     it('can create message', function() {

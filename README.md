@@ -1,4 +1,6 @@
-### synco - JS object with property modification and access by uri.
+[![Build Status](https://travis-ci.org/fiolkaf/synco.svg?branch=master)](https://travis-ci.org/fiolkaf/synco)
+
+# synco - Uri access to object properties
 
 ## Usage:
 ```

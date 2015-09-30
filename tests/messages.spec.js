@@ -1,5 +1,5 @@
+var expect = require('unexpected');
 var messages = require('../src/messages');
-var expect = require('unexpected/unexpected');
 
 describe('message', function() {
     describe('build object', function() {
@@ -26,5 +26,5 @@ describe('message', function() {
             });
         });
 
-    })
+    });
 });
